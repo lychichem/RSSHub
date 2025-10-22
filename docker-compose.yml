@@ -3,7 +3,7 @@ services:
         # two ways to enable puppeteer:
         # * comment out marked lines, then use this image instead: diygod/rsshub:chromium-bundled
         # * (consumes more disk space and memory) leave everything unchanged
-        image: diygod/rsshub # or ghcr.io/diygod/rsshub
+        image: diygod/rsshub:chromium-bundled # or ghcr.io/diygod/rsshub
         restart: always
         ports:
             - "1200:1200"
@@ -11,7 +11,7 @@ services:
             NODE_ENV: production
             CACHE_TYPE: redis
             REDIS_URL: "redis://redis:6379/"
-            PUPPETEER_WS_ENDPOINT: "ws://browserless:3000" # marked
+           # PUPPETEER_WS_ENDPOINT: "ws://browserless:3000" # marked
         healthcheck:
             test: ["CMD", "curl", "-f", "http://localhost:1200/healthz"]
             interval: 30s
@@ -19,20 +19,20 @@ services:
             retries: 3
         depends_on:
             - redis
-            - browserless # marked
+           # - browserless # marked
 
-    browserless: # marked
-        image: browserless/chrome # marked
-        restart: always # marked
-        ulimits: # marked
-            core: # marked
-                hard: 0 # marked
-                soft: 0 # marked
-        healthcheck: # marked
-            test: ["CMD", "curl", "-f", "http://localhost:3000/pressure"] # marked
-            interval: 30s # marked
-            timeout: 10s # marked
-            retries: 3 # marked
+   # browserless: # marked
+       # image: browserless/chrome # marked
+       # restart: always # marked
+       # ulimits: # marked
+           # core: # marked
+               # hard: 0 # marked
+               # soft: 0 # marked
+       # healthcheck: # marked
+           # test: ["CMD", "curl", "-f", "http://localhost:3000/pressure"] # marked
+           # interval: 30s # marked
+           # timeout: 10s # marked
+           # retries: 3 # marked
 
     redis:
         image: redis:alpine
